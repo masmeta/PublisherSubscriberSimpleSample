@@ -1,5 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 PROJECT(subpubSample)
+# first we can indicate the documentation build as an option and set it to ON by default
+option(BUILD_DOC "Build documentation" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -8,6 +10,30 @@ endif( NOT CMAKE_BUILD_TYPE)
 message(STATUS "CMAKE_BUILD_TYPE set by user to ${CMAKE_BUILD_TYPE}.")
 message(STATUS " |- CMAKE_BUILD_TYPE not set by user setting it to ${CMAKE_BUILD_TYPE} by default.")
 message(STATUS " |- If you want to build Debug version please set CMAKE_BUILD_TYPE to Debug in the cmake COMMAND line with -DCMAKE_BUILD_TYPE=Debug")
+
+
+IF (BUILD_DOC)
+  # check if Doxygen is installed
+  find_package(Doxygen REQUIRED)
+  if (DOXYGEN_FOUND)
+      # set input and output files
+      set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/documentations/Doxyfile.in)
+      set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+      # request to configure the file
+      configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+      message(STATUS "Doxygen build started")
+
+      # note the option ALL which allows to build the docs together with the application
+      add_custom_target( doc_doxygen ALL
+          COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+          WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+          COMMENT "Generating API documentation with Doxygen"
+          VERBATIM )
+  else (DOXYGEN_FOUND)
+    message(STATUS "Doxygen need to be installed to generate the doxygen documentation")
+  endif (DOXYGEN_FOUND)
+ENDIF(BUILD_DOC)
 
 # Get version from git
 find_package(Git)
