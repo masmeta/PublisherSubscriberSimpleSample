@@ -1,11 +1,51 @@
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
 #include "broker.h"
 #include "message.h"
 #include "publisher.h"
 #include "subscriber.h"
+#include "version.h"
 
-int main()
+static void show_usage(std::string name)
 {
+    std::cerr << "Usage: " << name << " <option>\n"
+              << "Optional option:\n"
+              << "\t-h,--help\t\tShow this help message\n"
+              << "\t-v,--version\t\tShow software version\n"
+              << std::endl;
+}
+
+static void show_version(std::string name)
+{
+    std::cout << "Software version: " << VERSION << std::endl;
+}
+
+int main(int argc, char *argv[])
+{
+    //Parsing argument
+    if (argc >= 3)
+    {
+        show_usage(argv[0]);
+        return EXIT_SUCCESS;
+    }
+    // help display
+    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
+    {
+        show_usage(argv[0]);
+        return EXIT_SUCCESS;
+    }
+    else if (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0)
+    {
+        show_version(argv[0]);
+        return EXIT_SUCCESS;
+    }
+    else
+    {
+        show_usage(argv[0]);
+        return EXIT_SUCCESS;
+    }
+
     subscriber firstSub;
     subscriber secondSub;
 
@@ -38,4 +78,6 @@ int main()
     firstSub.print();
     std::cout << "--[Second subscriber print]--" << std::endl;
     secondSub.print();
+
+    return EXIT_SUCCESS;
 }
