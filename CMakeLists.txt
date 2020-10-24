@@ -10,11 +10,8 @@ IF (CMAKE_COMPILER_IS_GNUCXX)
 ENDIF()
 
 FILE(GLOB_RECURSE SRC "${CMAKE_CURRENT_LIST_DIR}/src/src/*.cpp")
-FILE(GLOB_RECURSE HDR  "${CMAKE_CURRENT_LIST_DIR}/src/include/*.h")
-
-
 
 #Create executable
-include_directories("${CMAKE_CURRENT_LIST_DIR}/src/include/"  ${HDR}) 
+include_directories("${CMAKE_CURRENT_LIST_DIR}/src/include/") 
 add_executable(${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/src/main.cpp" ${SRC})
 target_link_libraries(${PROJECT_NAME} )
