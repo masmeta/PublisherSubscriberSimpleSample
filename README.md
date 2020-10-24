@@ -36,6 +36,7 @@ More informations :
 ## Authors
 
 * **G. Sauvage** _alias_ [@masmeta](https://https://github.com/masmeta)
-## Licence
 
-This project is under license ``WTFTPL`` - view file [LICENSE.md](LICENSE.md) for more informations.
+## License
+
+This project is under license [Creative Commons CC0 Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) - view file [LICENSE.md](LICENSE.md) for more informations.
