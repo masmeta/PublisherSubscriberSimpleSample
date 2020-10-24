@@ -6,7 +6,7 @@ In ‘Publisher-Subscriber’ pattern, senders of messages, called publishers, d
 
 This means that the publisher and subscriber don’t know about the existence of one another. There is a third component, called broker or message broker or event bus, which is known by both the publisher and subscriber, which filters all incoming messages and distributes them accordingly. In other words, pub-sub is a pattern used to communicate messages between different system components without these components knowing anything about each other’s identity. how does the broker filter all the messages? Actually, there are several processes for message filtering. Most popular methods are: Topic-based and Content-based. Well, not going to further on that road, if you are interested. Here is the schematic diagram  (Pub-Sub Pattern (image credit: MSDN blog)) :
 
-[Pub-Sub Pattern](masmeta.github.com/PublisherSubscriberSimpleSample/assets/schematic diagram.gif)
+[Pub-Sub Pattern](github.com/masmeta/PublisherSubscriberSimpleSample/assets/schematic diagram.gif)
 
 ## Getting started
 
