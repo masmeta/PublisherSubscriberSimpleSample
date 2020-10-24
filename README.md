@@ -4,9 +4,10 @@ A simple example of the publisher subscriber pattern with C++
 
 In ‘Publisher-Subscriber’ pattern, senders of messages, called publishers, do not program the messages to be sent directly to specific receivers, called subscribers.
 
-This means that the publisher and subscriber don’t know about the existence of one another. There is a third component, called broker or message broker or event bus, which is known by both the publisher and subscriber, which filters all incoming messages and distributes them accordingly. In other words, pub-sub is a pattern used to communicate messages between different system components without these components knowing anything about each other’s identity. how does the broker filter all the messages? Actually, there are several processes for message filtering. Most popular methods are: Topic-based and Content-based. Well, not going to further on that road, if you are interested. Here is the schematic diagram  (Pub-Sub Pattern (image credit: MSDN blog)) :
-
-[Pub-Sub Pattern](masmeta.github.com/PublisherSubscriberSimpleSample/assets/schematic diagram.gif)
+This means that the publisher and subscriber don’t know about the existence of one another. There is a third component, called broker or message broker or event bus, which is known by both the publisher and subscriber, which filters all incoming messages and distributes them accordingly. In other words, pub-sub is a pattern used to communicate messages between different system components without these components knowing anything about each other’s identity. how does the broker filter all the messages? Actually, there are several processes for message filtering. Most popular methods are: Topic-based and Content-based. Well, not going to further on that road, if you are interested. Here is the schematic diagram (image credit: [MSDN blog](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff649664(v=pandp.10)):
+<p align="center">
+  <img src="https://docs.microsoft.com/en-us/previous-versions/msp-n-p/images/ff649664.despublishsubscribe_f01(en-us,pandp.10).gif">
+</p>
 
 ## Getting started
 
@@ -34,7 +35,7 @@ More informations :
 
 ## Authors
 
-* **Guillaume Sauvage** _alias_ [@masmeta](https://https://github.com/masmeta)
+* **G. Sauvage** _alias_ [@masmeta](https://https://github.com/masmeta) ![french](https://icon-library.net/icon/french-flag-icon-15.html)
 
 ## Licence
 
