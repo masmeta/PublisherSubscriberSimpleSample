@@ -3,13 +3,13 @@ PROJECT(subpubSample)
 # first we can indicate the documentation build as an option and set it to ON by default
 option(BUILD_DOC "Build documentation" ON)
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif( NOT CMAKE_BUILD_TYPE)
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE Release)
+endIF( NOT CMAKE_BUILD_TYPE)
 
-message(STATUS "CMAKE_BUILD_TYPE set by user to ${CMAKE_BUILD_TYPE}.")
-message(STATUS " |- CMAKE_BUILD_TYPE not set by user setting it to ${CMAKE_BUILD_TYPE} by default.")
-message(STATUS " |- If you want to build Debug version please set CMAKE_BUILD_TYPE to Debug in the cmake COMMAND line with -DCMAKE_BUILD_TYPE=Debug")
+message(STATUS "CMAKE_BUILD_TYPE SET by user to ${CMAKE_BUILD_TYPE}.")
+message(STATUS " |- CMAKE_BUILD_TYPE not SET by user SETting it to ${CMAKE_BUILD_TYPE} by default.")
+message(STATUS " |- IF you want to build Debug version please SET CMAKE_BUILD_TYPE to Debug in the cmake COMMAND line with -DCMAKE_BUILD_TYPE=Debug")
 
 
 IF (BUILD_DOC)
@@ -37,7 +37,7 @@ ENDIF(BUILD_DOC)
 
 # Get version from git
 find_package(Git)
-if(GIT_FOUND)
+IF(GIT_FOUND)
   EXECUTE_PROCESS(
     COMMAND git describe --long
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -46,27 +46,27 @@ if(GIT_FOUND)
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
   message(STATUS "Git describe returned: ${CURRENT_BUILD_VERSION}")
-  set(VERSION_PATCH ${CURRENT_BUILD_VERSION})
+  SET(VERSION_PATCH ${CURRENT_BUILD_VERSION})
   string(REGEX MATCH "v([0-9]+)\\.([0-9]+)\\-(.*)" version_valid ${CURRENT_BUILD_VERSION})
-  if(version_valid)
+  IF(version_valid)
     string(REGEX REPLACE "v([0-9]+)\\.([0-9]+)\\-(.*)" "\\1;\\2;\\3" VERSION_MATCHES ${CURRENT_BUILD_VERSION})
     list(GET VERSION_MATCHES 0 version_major)
-    set(VERSION_MAJOR ${version_major})
+    SET(VERSION_MAJOR ${version_major})
 
     list(GET VERSION_MATCHES 1 version_minor)
-    set(VERSION_MINOR ${version_minor})
+    SET(VERSION_MINOR ${version_minor})
 
     list(GET VERSION_MATCHES 2 version_patch)
-    set(VERSION_PATCH ${version_patch})
-  else()
+    SET(VERSION_PATCH ${version_patch})
+  ELSE()
     message(FATAL_ERROR "*META* Problem to get git based version from regex")
-  endif()
-else()
+  endIF()
+ELSE()
     message(FATAL_ERROR "*META* Problem to get git based version")
-endif()
+endIF()
 
-set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
-set(VERSION_NOHASH "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+SET(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+SET(VERSION_NOHASH "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 message(STATUS "Building project version ${VERSION}")
 configure_file (
     "${CMAKE_SOURCE_DIR}/version.in"
@@ -74,12 +74,41 @@ configure_file (
     @ONLY
 )
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+SET(CMAKE_CXX_STANDARD 11)
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 IF (CMAKE_COMPILER_IS_GNUCXX)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -O3 ")
     ADD_DEFINITIONS(-fpermissive)
-	ADD_DEFINITIONS(-Dnullptr=0) # needed for some compilers
+  ADD_DEFINITIONS(-Dnullptr=0) # needed for some compilers
+ELSEIF(MSVC)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /openmp /fp:fast")
+    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /GL /O2 /Ob2 /Ot /DNDEBUG")
+ENDIF()
+
+IF(CMAKE_SYSTEM_NAME MATCHES Windows)
+    IF(${ARCH_SIZE} MATCHES 32)
+        SET(ARCH x86)
+    ELSEIF(${ARCH_SIZE} MATCHES 64)
+        SET(ARCH x64)
+    ELSE()
+        SET(ARCH Win)
+    endIF()
+
+    IF(MSVC)
+        IF(MSVC10)
+            SET(VC_VERS "_vc10")
+        ELSEIF(MSVC11)
+            SET(VC_VERS "_vc11")
+        ELSEIF(MSVC12)
+            SET(VC_VERS "_vc12")
+        ELSEIF(MSVC14)
+            SET(VC_VERS "_vc14")
+        ELSEIF(MSVC15)
+            SET(VC_VERS "_vc15")
+        endIF()
+    ELSE()
+        SET(VC_VERS "")
+    endIF()
 ENDIF()
 
 FILE(GLOB_RECURSE SRC "${CMAKE_CURRENT_LIST_DIR}/src/src/*.cpp")
