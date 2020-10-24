@@ -1,6 +1,14 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 PROJECT(subpubSample)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif( NOT CMAKE_BUILD_TYPE)
+
+message(STATUS "CMAKE_BUILD_TYPE set by user to ${CMAKE_BUILD_TYPE}.")
+message(STATUS " |- CMAKE_BUILD_TYPE not set by user setting it to ${CMAKE_BUILD_TYPE} by default.")
+message(STATUS " |- If you want to build Debug version please set CMAKE_BUILD_TYPE to Debug in the cmake COMMAND line with -DCMAKE_BUILD_TYPE=Debug")
+
 # Get version from git
 find_package(Git)
 if(GIT_FOUND)
