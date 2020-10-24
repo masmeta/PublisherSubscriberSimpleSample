@@ -13,7 +13,7 @@ message(STATUS " |- If you want to build Debug version please set CMAKE_BUILD_TY
 find_package(Git)
 if(GIT_FOUND)
   EXECUTE_PROCESS(
-    COMMAND git describe --always
+    COMMAND git describe --long
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     OUTPUT_VARIABLE "CURRENT_BUILD_VERSION"
     ERROR_QUIET
